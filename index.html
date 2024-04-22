@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo list</title>
+    <!-- Material Icons -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20,300,0,0" />
+    <!-- css -->
+    <link rel="stylesheet" href="./css/style.css">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="./assets/todo.svg" type="image/x-icon">
+</head>
+
+<body>
+    <div class="app">
+        <header>
+            <img src="./assets/todo.svg" alt="Todo logo" class="logo">
+
+            <div class="right-header">
+                <button class="search-btn" onclick="showHideSearch()">
+                    <span class="material-symbols-rounded search-icon">
+                        search
+                    </span>
+                </button>
+                <button class="theme" onclick="themeToggle()">
+                    <span class="material-symbols-rounded theme-icon">
+                        light_mode
+                    </span>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <div class="flex-between-center mt-2">
+                <h2 class="title">Todo</h2>
+                <div class="flex-gap">
+                    <button class="filter-btn">
+                        <span class="material-symbols-rounded">
+                            filter_list
+                        </span>
+                    </button>
+                    <button class="add-btn" onclick="showHideForm()">
+                        <span class="material-symbols-rounded add-icon">
+                            add
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="search-bar hide mt-1">
+                <span class="material-symbols-rounded">
+                    search
+                </span>
+                <input type="text" class="search-input" role="search" placeholder="Search Todo..." autofocus>
+            </div>
+
+            <ul class="todo-list mt-2">
+                
+                
+                <div class="no-item hide mt-2">
+                    <img src="./assets/todo.svg" alt="no item" class="no-item-img">
+                    <p class="fade-text">No item in your todo!</p>
+                </div>
+            </ul>
+        </main>
+
+        <div class="add-task-container hide">
+            <form class="task-form">
+                <div class="flex-column mb-1">
+                    <label for="todo-text">Todo:</label>
+                    <input type="text" id="todo-text" placeholder="What do you have to do?" class="todo-input" autofocus>
+                </div>
+                <div class="flex-column">
+                    <label for="todo-catergory">Category:</label>
+                    <select id="category">
+                        <option value="" disabled selected>-Select One-</option>
+                        <option value="#Personal">Personal</option>
+                        <option value="#Work">Work</option>
+                        <option value="#Family">Family</option>
+                        <option value="#Exercise">Exercise</option>
+                        <option value="#Other">Other</option>
+                    </select>
+                </div>
+                <!-- <div class="flex-column">
+                    <label for="todo-catergory">Category:</label>
+                    <input type="text" id="todo-catergory" placeholder="Select from below" class="todo-category-input" readonly>
+                </div>
+                <div class="flex-wrap">
+                    <input type="radio" name="category" class="chk" id="personal" value="#Personal">
+                    <label for="personal" class="chk-label">#Personal</label>
+                    <input type="radio" name="category" class="chk" id="work" value="#Work">
+                    <label for="work" class="chk-label">#Work</label>
+                    <input type="radio" name="category" class="chk" id="exercise" value="#Exercise">
+                    <label for="exercise" class="chk-label">#Exercise</label>
+                    <input type="radio" name="category" class="chk" id="family" value="#Family">
+                    <label for="family" class="chk-label">#Family</label>
+                    <input type="radio" name="category" class="chk" id="other" value="#Other">
+                    <label for="other" class="chk-label">#Other</label>
+                </div> -->
+                <button type="submit" class="submit-btn mt-2">
+                    <span class="material-symbols-rounded">
+                        add
+                    </span>
+                    <span>Add</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Javascript -->
+    <script src="./js/main.js"></script>
+</body>
+
+</html>

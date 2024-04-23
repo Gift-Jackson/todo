@@ -10,10 +10,12 @@ const todoInput = document.querySelector(".todo-input")
 const categoryInput = document.querySelector("#category")
 const form = document.querySelector(".task-form")
 const noItem = document.querySelector(".no-item")
+// const checkIcon = document.querySelector(".check-icon")
 
 const themeToggle = () => {
     document.body.classList.toggle("light-mode")
     document.body.classList.contains("light-mode") ? themeIcon.textContent = "dark_mode" : themeIcon.textContent = "light_mode";
+    saveData()
 }
 
 const showHideSearch = () => {
@@ -28,6 +30,7 @@ const showHideForm = () => {
     if (todoList.classList.contains("hide")) {
         addIcon.textContent = "close"
         title.textContent = "Add Todo"
+        noItem.classList.remove("active")
     }
     else {
         addIcon.textContent = "add"
@@ -40,7 +43,10 @@ const showHideForm = () => {
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    if (!todoInput.value && !categoryInput) {
+    if (!todoInput.value) {
+        alert("Stop young man!")
+    }
+    else if (!categoryInput.value) {
         alert("Stop young man!")
     }
     else {
@@ -56,34 +62,49 @@ let data = []
 
 const emptyData = () => {
     console.log("Data length:", data.length);
-    data?.length === 0 ? noItem.classList.remove("hide") : noItem.classList.add("hide")
+    data?.length === 0 ? noItem.classList.add("active") : noItem.classList.remove("active")
 }
 
 const acceptData = () => {
     data.unshift({
         todo: todoInput.value,
         category: categoryInput.value,
+        completed: false,
     })
 
     console.log(data)
-    emptyData();
+    emptyData(data);
     saveData()
 }
+
+const now = new Date()
+const formattedTime = Intl.DateTimeFormat('en-US',
+    {
+        dateStyle: "full",
+        timeStyle: "short"
+    }
+).format(now)
+
+
 
 const displayTodo = () => {
     todoList.innerHTML = ""
     const todos = data.map((item, index) => {
         const { todo, category } = item
 
+
         return ` <li class="todo flex-gap" id="${index}">
-                    <button class="check-btn">
-                        <span class="material-symbols-rounded">
+                    <button class="check-btn" onclick="completeTodo(this)">
+                        <span class="material-symbols-rounded circle">
                             circle
+                        </span>
+                        <span class="material-symbols-rounded check hide">
+                            check_circle
                         </span>
                     </button>
                     <div class="flex-1">
                         <p class="big-text">${todo}</p>
-                        <p class="small-text">Monday 23rd, April, 2024. 10:28pm</p>
+                        <p class="small-text">${formattedTime}</p>
                         <p class="small-text mt-1"><span class="group">${category}</span></p>
                     </div>
                     <button class="del-btn" onclick="deleteTodo(this); displayTodo()">
@@ -107,22 +128,72 @@ const deleteTodo = (e) => {
     e.parentElement.remove()
     data.splice(todoId, 1)
     console.log(data)
-    emptyData()
+    emptyData(data)
     saveData()
 }
 
+const completeTodo = (e) => {
+    const parent = e.parentElement;
+    parent.classList.toggle("completed");
+    const todoId = parent.id;
+    const todo = data[todoId];
+    const checkIcon = parent.querySelector(".check")
+    const circleIcon = parent.querySelector(".circle")
+    const todoText = parent.querySelector(".big-text")
+    const dateText = parent.querySelector(".small-text")
+    const delBtn = parent.querySelector(".del-btn")
 
-// localstorage
+    if (parent.classList.contains("completed")) {
+        todo.completed = true;
+        checkIcon.classList.remove("hide")
+        circleIcon.classList.add("hide")
+        todoText.classList.add("done")
+        delBtn.classList.add("done")
+        dateText.classList.add("done")
+    } else {
+        todo.completed = false;
+        checkIcon.classList.add("hide")
+        circleIcon.classList.remove("hide")
+        todoText.classList.remove("done")
+        delBtn.classList.remove("done")
+        dateText.classList.remove("done")
+    }
+    console.log(todo.completed)
+
+    saveData();
+
+}
+
+
+
 const saveData = () => {
     localStorage.setItem("todos", JSON.stringify(data))
 }
+
 
 (() => {
     data = JSON.parse(localStorage.getItem("todos")) || []
     displayTodo()
     saveData()
     emptyData()
+
+    // const todos = document.querySelectorAll(".todo")
+
+
+    // todos.forEach((todo) => {
+    //     const checkIcon = todo.querySelector(".check-btn")
+    //     if (todo.classList.contains("completed")) {
+    //         data.completed = true;
+    //         checkIcon.innerHTML = "check_circle"
+    //     } else {
+    //         data.completed = false;
+    //         checkIcon.innerHTML = "circle"
+    //     }
+    // })
+
+    
+    
 })()
 
-emptyData()
+emptyData(data)
 

@@ -122,10 +122,19 @@ main{
 }
 .big-text{
     font-size: 1.2em;
+    text-transform: capitalize;
+}
+.big-text.done{
+    text-decoration: line-through;
+    opacity: .5;
 }
 .small-text{
     font-size: small;
     color: var(--fade-text);
+}
+.small-text.done{
+    text-decoration: line-through;
+    opacity: .5;
 }
 
 .todo{
@@ -145,9 +154,14 @@ li:nth-child(1){
 }
 .no-item{
     text-align: center;
+    display: none;
+}
+.no-item p{
+    font-size: small;
+}
+.no-item.active{
     display: block;
 }
-
 
 .no-item-img{
     height: 100px;
@@ -170,6 +184,7 @@ li:nth-child(1){
     transform: translateY(-20px);
     animation: search .2s ease .2s 1 forwards;
 }
+
 
 @keyframes search {
     100%{
@@ -198,10 +213,10 @@ li:nth-child(1){
 }
 
 .flex-column input, select{
-    padding: .75em;
+    padding: 1em;
     border: 0;
     background-color: var(--secondary-color);
-    color: var(--white);
+    color: var(--text-color);
     border-radius: .5em;
 }
 
@@ -262,6 +277,9 @@ li:nth-child(1){
 .del-btn{
     background-color: transparent;
     border: 0;
+}
+.del-btn.done span{
+    color: crimson;
 }
 
 
